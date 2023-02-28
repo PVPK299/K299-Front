@@ -3,7 +3,7 @@ import { Portal, Box, useDisclosure } from "@chakra-ui/react";
 import Footer from "components/footer/FooterAdmin.js";
 // Layout components
 import Navbar from "components/navbar/NavbarAdmin.js";
-// import Sidebar from "components/sidebar/Sidebar.js";
+import Sidebar from "components/sidebar/Sidebar.js";
 import { SidebarContext } from "contexts/SidebarContext";
 import React, { useState } from "react";
 import { Redirect, Route, Switch } from "react-router-dom";
@@ -118,7 +118,7 @@ export default function Dashboard(props) {
           toggleSidebar,
           setToggleSidebar,
         }}>
-        {/* <Sidebar routes={routes} display='none' {...rest} /> */}
+        <Sidebar routes={routes} display='none' {...rest} />
         <Box
           float='right'
           minHeight='100vh'
