@@ -1,3 +1,8 @@
+# [Solar Monitoring System]
+
+[<img alt="Horizon UI" src="https://i.ibb.co/fdyTwz1/introduction-image-2.png" /> ](https://github.com/horizon-ui/horizon-ui-chakra)
+
+
 ### 🎉 [NEW] Horizon UI Components
 All the main components from both versions, this will help you to see and interact with all & the latest added components of Horizon (also, new components are on the way, stay tuned)! ⚡️
 <a href="https://horizon-ui.com/components/?ref=readme-horizon" target="_blank">See all components</a>
