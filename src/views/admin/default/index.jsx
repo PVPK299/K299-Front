@@ -51,19 +51,52 @@ import PieCard from "views/admin/default/components/PieCard";
 import Tasks from "views/admin/default/components/Tasks";
 import TotalSpent from "views/admin/default/components/TotalSpent";
 import WeeklyRevenue from "views/admin/default/components/WeeklyRevenue";
+
 import {
   columnsDataCheck,
   columnsDataComplex,
+  SolarDataHeader
 } from "views/admin/default/variables/columnsData";
 import tableDataCheck from "views/admin/default/variables/tableDataCheck.json";
 import tableDataComplex from "views/admin/default/variables/tableDataComplex.json";
+import DataTable from "components/dataDispaly/DataTable";
+import Card from "components/card/Card";
 
 export default function UserReports() {
   // Chakra Color Mode
+  
+  const data = [
+      {
+          Time: "2001-01-01",
+          PV1_Voltage: 1,
+          PV2_Voltage: 2,
+          PV1_Current: 12,
+          PV2_Current: 21,
+          Total_Energy: 1299993,
+          Total_AC_Power: 13,
+          Daily_Energy: 1515
+      },
+      {
+          ID: 1,
+          ControllerName: "yes",
+          Time: "2001-01-01",
+          Temperature: 200,
+          PV1_Voltage: 1,
+          PV2_Voltage: 2,
+          PV1_Current: 12,
+          PV2_Current: 21,
+          Total_Energy: 1299993,
+          Total_Operation_Hours: 7,
+          Total_AC_Power: 13,
+          Daily_Energy: 1515
+      }
+  ];
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
+      <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap='20px' mb='20px'><DataTable columnsData={SolarDataHeader} tableData={data}/></SimpleGrid>
+      
       <SimpleGrid
         columns={{ base: 1, md: 2, lg: 3, "2xl": 6 }}
         gap='20px'
