@@ -62,21 +62,32 @@ import tableDataComplex from "views/admin/default/variables/tableDataComplex.jso
 import DataTable from "components/dataDispaly/DataTable";
 import GetData from "components/menu/test";
 import Card from "components/card/Card";
-
+import { useState, useEffect } from 'react';
 export default function UserReports() {
   // Chakra Color Mode
   
   // data needs to be JSON format
-  const data = GetData('https://https://pvpk299-back.azurewebsites.net/api/SolarData/GetSolarData');
+
+const [data, setData] = useState(null);
+
+  useEffect(() => {
+    async function fetchData() {
+      const response = await fetch('https://pvpk299-back.azurewebsites.net/api/SolarData/GetByIDFromTo/60/65');
+      const jsonData = await response.json();
+
+      setData(jsonData);
+    }
+
+    fetchData();
+  }, []);
 
 
-  
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap='20px' mb='20px'><DataTable columnsData={SolarDataHeader} tableData={data}/></SimpleGrid>
       
+      <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap='20px' mb='20px'><DataTable columnsData={SolarDataHeader} tableData={data}/></SimpleGrid>
       <SimpleGrid
         columns={{ base: 1, md: 2, lg: 3, "2xl": 6 }}
         gap='20px'

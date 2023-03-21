@@ -37,34 +37,34 @@ export const columnsDataComplex = [
 export const SolarDataHeader = [
   {
     Header: "Time",
-    accessor: "Time",
+    accessor: "time",
   },
   {
     Header: "PV1 Voltage",
-    accessor: "PV1_Voltage",
+    accessor: "pV1_Voltage",
   },
   {
     Header: "PV2 Voltage",
-    accessor: "PV2_Voltage",
+    accessor: "pV2_Voltage",
   },
   {
     Header: "PV1 Current",
-    accessor: "PV1_Current",
+    accessor: "pV1_Current",
   },
   {
     Header: "PV2 Current",
-    accessor: "PV2_Current",
+    accessor: "pV2_Current",
   },
   {
     Header: "Total energy",
-    accessor: "Total_Energy",
+    accessor: "total_Energy",
   },
   {
     Header: "Total AC power",
-    accessor: "Total_AC_Power",
+    accessor: "total_AC_Power",
   },
   {
     Header: "Daily energy",
-    accessor: "Daily_Energy",
+    accessor: "daily_Energy",
   },
 ];
