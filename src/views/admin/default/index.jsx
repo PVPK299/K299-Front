@@ -61,6 +61,7 @@ import tableDataCheck from "views/admin/default/variables/tableDataCheck.json";
 import tableDataComplex from "views/admin/default/variables/tableDataComplex.json";
 import DataTable from "components/dataDispaly/DataTable";
 import GetData from "components/menu/test";
+import TotalACPower from "components/dataDispaly/TotalACPower";
 import Card from "components/card/Card";
 import { useState, useEffect } from 'react';
 export default function UserReports() {
@@ -68,6 +69,7 @@ export default function UserReports() {
   
   // data needs to be JSON format
 
+  // begin nonsense
 const [data, setData] = useState(null);
 
   useEffect(() => {
@@ -81,13 +83,21 @@ const [data, setData] = useState(null);
     fetchData();
   }, []);
 
+  const fakedata = [{"id":60,"controllerName":"T15133M013","time":"2015-01-01T13:44:31","temperature":20,"pV1_Voltage":652.7,"pV2_Voltage":607.8,"pV1_Current":0.5,"pV2_Current":0.3,"total_Energy":211.1,"total_Operation_Hours":340,"total_AC_Power":351,"daily_Energy":0.6},{"id":61,"controllerName":"T15133M013","time":"2015-01-01T13:49:31","temperature":20,"pV1_Voltage":770.5,"pV2_Voltage":787.4,"pV1_Current":0.4,"pV2_Current":0.2,"total_Energy":211.1,"total_Operation_Hours":340,"total_AC_Power":137,"daily_Energy":0.6},{"id":62,"controllerName":"T15133M013","time":"2015-01-01T13:54:31","temperature":21,"pV1_Voltage":788.4,"pV2_Voltage":790.8,"pV1_Current":0.4,"pV2_Current":0.2,"total_Energy":211.1,"total_Operation_Hours":340,"total_AC_Power":124,"daily_Energy":0.6},{"id":63,"controllerName":"T15133M013","time":"2015-01-01T13:59:31","temperature":20,"pV1_Voltage":806.7,"pV2_Voltage":816.6,"pV1_Current":0.4,"pV2_Current":0.2,"total_Energy":211.1,"total_Operation_Hours":340,"total_AC_Power":191,"daily_Energy":0.6},{"id":64,"controllerName":"T15133M013","time":"2015-01-01T14:04:31","temperature":20,"pV1_Voltage":743.1,"pV2_Voltage":770.8,"pV1_Current":0.4,"pV2_Current":0.2,"total_Energy":211.1,"total_Operation_Hours":340,"total_AC_Power":150,"daily_Energy":0.6},{"id":65,"controllerName":"T15133M013","time":"2015-01-01T14:09:31","temperature":21,"pV1_Voltage":820.1,"pV2_Voltage":818.3,"pV1_Current":0.4,"pV2_Current":0.2,"total_Energy":211.1,"total_Operation_Hours":340,"total_AC_Power":155,"daily_Energy":0.6}];
+
+  var AC = fakedata.map((obj) => obj.total_AC_Power);
+  var TIME = fakedata.map((obj) => obj.time);
+
+
+
+  // end nonssense
 
   const brandColor = useColorModeValue("brand.500", "white");
   const boxBg = useColorModeValue("secondaryGray.300", "whiteAlpha.100");
   return (
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
-      
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap='20px' mb='20px'><DataTable columnsData={SolarDataHeader} tableData={data}/></SimpleGrid>
+      <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap='20px' mb='20px'><TotalACPower Yaxis={AC} Xaxis={TIME}/></SimpleGrid>
+      <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap='20px' mb='20px'><DataTable columnsData={SolarDataHeader} tableData={fakedata}/></SimpleGrid>
       <SimpleGrid
         columns={{ base: 1, md: 2, lg: 3, "2xl": 6 }}
         gap='20px'
