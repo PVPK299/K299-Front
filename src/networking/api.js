@@ -2,8 +2,8 @@ import { NewUser } from '../models/user.js';
 
 
 const host_meteo = "https://api.meteo.lt/v1";
-// const host_server = "https://pvpk299-back.azurewebsites.net";
-const host_server = "https://localhost:7257";
+const host_server = "https://pvpk299-back.azurewebsites.net";
+// const host_server = "https://localhost:7257";
 
 const HEADERS = { 'Content-Type': 'application/json' };
 
