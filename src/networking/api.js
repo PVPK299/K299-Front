@@ -58,6 +58,9 @@ export function fetchSolarData(fromID, toID) {
 }
 
 export function getAllStations() {
-    return getData(host_meteo, `/stations`);
+    return getData(host_server, `/api/weather/stations`);
 }
 
+export function getCurrentWeather() {
+    return getData(host_server, `/api/weather/current`);
+}

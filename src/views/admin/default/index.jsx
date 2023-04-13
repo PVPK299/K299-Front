@@ -12,6 +12,8 @@ import {
 import Usa from "assets/img/dashboards/usa.png";
 // Custom components
 import MiniCalendar from "components/calendar/MiniCalendar";
+import MiniWeather from "components/weather/MiniWeather";
+
 import MiniStatistics from "components/card/MiniStatistics";
 import IconBox from "components/icons/IconBox";
 import React from "react";
@@ -85,6 +87,7 @@ export default function UserReports() {
         columns={{ base: 1, md: 2, lg: 3, "2xl": 6 }}
         gap='20px'
         mb='20px'>
+        <MiniWeather />
         <MiniStatistics
           startContent={
             <IconBox
