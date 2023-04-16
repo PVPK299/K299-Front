@@ -57,6 +57,10 @@ export function fetchSolarData(fromID, toID) {
     return getData(host_server, `/api/SolarData/GetByIDFromTo/${fromID}/${toID}`);
 }
 
+export function fetchSolarDataByDate(dateFrom, dateTo) {
+    return getData(host_server, `/api/SolarData/GetByDateFromTo/${dateFrom}/${dateTo}`);
+}
+
 export function getAllStations() {
     return getData(host_server, `/api/weather/stations`);
 }

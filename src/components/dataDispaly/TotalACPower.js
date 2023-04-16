@@ -5,12 +5,16 @@ import {
     Flex,
     Icon,
     Text,
+    Input,
+    FormLabel,
     useColorModeValue,
   } from "@chakra-ui/react";
   // Custom components
   import Card from "components/card/Card.js";
   import LineChart from "components/charts/LineChart";
   import React from "react";
+  import { fetchSolarDataByDate } from "networking/api";
+  import { useState, useEffect } from "react";
   import { IoCheckmarkCircle } from "react-icons/io5";
   import { MdBarChart, MdOutlineCalendarToday } from "react-icons/md";
   // Assets
@@ -22,6 +26,11 @@ import {
   
   export default function TotalACPower(props) {
     const { Yaxis, Xaxis } = props;
+    const [isLoading, setIsLoading] = useState(false);
+    const [yAxisData, setYAxisData] = useState({});
+    const [xAxisData, setXAxisData] = useState({});
+    const [dateFromValue, setDateFromValue] = useState("");
+    const [dateToValue, setDateToValue] = useState("");
   
     // Chakra Color Mode
   
@@ -38,6 +47,24 @@ import {
       { bg: "secondaryGray.300" },
       { bg: "whiteAlpha.100" }
     );
+    
+    function filterByDate() {
+      setIsLoading(true);
+      fetchSolarDataByDate(dateFromValue, dateToValue)
+        .then((data) => {
+          const timeArray = data.map(item => item.time);
+          const ACPowerArray = data.map(item => item.total_AC_Power);
+          setYAxisData(lineChartDataTotalSpent(ACPowerArray));
+          setXAxisData(lineChartOptionsTotalSpent(timeArray));
+          setIsLoading(false);
+      });
+    }
+
+    useEffect(() => {
+      setYAxisData(lineChartDataTotalSpent(Yaxis));
+      setXAxisData(lineChartOptionsTotalSpent(Xaxis));
+    }, []);
+
     return (
       <Card
         justifyContent='center'
@@ -55,13 +82,40 @@ import {
               lineHeight='100%'>
               Total AC power
             </Text>
+            <FormLabel mt='20px' mb='0' ml='1px' fontSize='14px'>Date From</FormLabel>
+            <Input
+              placeholder="Select Date From"
+              size="sm"
+              type="date"
+              id="date-from"
+              value={dateFromValue}
+              onChange={(e) => setDateFromValue(e.target.value)}/>
+            <FormLabel mt='5px' mb='0' ml='1px' fontSize='14px'>Date To</FormLabel>
+            <Input
+              placeholder="Select Date To"
+              size="sm"
+              type="date"
+              id="date-to"
+              value={dateToValue}
+              onChange={(e) => setDateToValue(e.target.value)}/>
+            <Button colorScheme='purple' mt='15px' size='sm' onClick={filterByDate}>
+              Filter
+            </Button>
           </Flex>
-          <Box minH='260px' minW='75%' mt='auto'>
-            <LineChart
-              chartData={lineChartDataTotalSpent(Yaxis)}
-              chartOptions={lineChartOptionsTotalSpent(Xaxis)}
-            />
-          </Box>
+          {isLoading ? (
+            <Flex justifyContent='center' alignItems='center' width='100%'>Loading...</Flex>
+          ) : (
+            <>
+              {Object.keys(yAxisData).length > 0 && Object.keys(xAxisData).length > 0 && (
+                <Box minH='260px' minW='75%' mt='auto'>
+                  <LineChart
+                    chartData={yAxisData}
+                    chartOptions={xAxisData}
+                  />
+                </Box>
+              )}
+            </>
+          )}
         </Flex>
       </Card>
     );

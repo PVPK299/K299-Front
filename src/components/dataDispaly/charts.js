@@ -30,7 +30,7 @@ export function lineChartOptionsTotalSpent(props) {
       size: 0,
       colors: "white",
       strokeColors: "#7551FF",
-      strokeWidth: 3,
+      strokeWidth: 2,
       strokeOpacity: 0.9,
       strokeDashArray: 0,
       fillOpacity: 1,
