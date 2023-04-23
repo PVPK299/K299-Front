@@ -72,34 +72,15 @@ import {
         direction='column'
         w='100%'
         mb='0px'>
-        <Flex w='100%' flexDirection={{ base: "column", lg: "row" }}>
-          <Flex flexDirection='column' me='20px' mt='28px'>
-            <Text
-              color={textColor}
-              fontSize='34px'
-              textAlign='start'
-              fontWeight='700'
-              lineHeight='100%'>
-              Total AC power
-            </Text>
-            <FormLabel mt='20px' mb='0' ml='1px' fontSize='14px'>Date From</FormLabel>
-            <Input
-              size="sm"
-              type="date"
-              id="date-from"
-              value={dateFromValue}
-              onChange={(e) => setDateFromValue(e.target.value)}/>
-            <FormLabel mt='5px' mb='0' ml='1px' fontSize='14px'>Date To</FormLabel>
-            <Input
-              size="sm"
-              type="date"
-              id="date-to"
-              value={dateToValue}
-              onChange={(e) => setDateToValue(e.target.value)}/>
-            <Button colorScheme='purple' mt='15px' size='sm' onClick={filterByDate}>
-              Filter
-            </Button>
-          </Flex>
+        <Flex w='100%' flexDirection={{ base: "column" }}>
+          <Text
+            color={textColor}
+            fontSize='34px'
+            textAlign='start'
+            fontWeight='700'
+            lineHeight='100%'>
+            Latest Weather In Kaunas
+          </Text>
           {isLoading ? (
             <Flex justifyContent='center' alignItems='center' width='100%'>Loading...</Flex>
           ) : (
