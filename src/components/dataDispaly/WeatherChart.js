@@ -13,20 +13,20 @@ import {
   import Card from "components/card/Card.js";
   import LineChart from "components/charts/LineChart";
   import React from "react";
-  import { fetchSolarDataByDate } from "networking/api";
+  import { getLatestKaunasWeather } from "networking/api";
   import { useState, useEffect } from "react";
   import { IoCheckmarkCircle } from "react-icons/io5";
   import { MdBarChart, MdOutlineCalendarToday } from "react-icons/md";
   // Assets
   import { RiArrowUpSFill } from "react-icons/ri";
   import {
-    lineChartDataTotalSpent,
+    weatherLineChartTemperature,
     lineChartOptionsTotalSpent,
   } from "./charts";
   
   export default function TotalACPower(props) {
     const { Yaxis, Xaxis } = props;
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [yAxisData, setYAxisData] = useState({});
     const [xAxisData, setXAxisData] = useState({});
     const [dateFromValue, setDateFromValue] = useState("");
@@ -47,22 +47,16 @@ import {
       { bg: "secondaryGray.300" },
       { bg: "whiteAlpha.100" }
     );
-    
-    function filterByDate() {
-      setIsLoading(true);
-      fetchSolarDataByDate(dateFromValue, dateToValue)
-        .then((data) => {
-          const timeArray = data.map(item => item.time);
-          const ACPowerArray = data.map(item => item.total_AC_Power);
-          setYAxisData(lineChartDataTotalSpent(ACPowerArray));
-          setXAxisData(lineChartOptionsTotalSpent(timeArray));
-          setIsLoading(false);
-      });
-    }
 
     useEffect(() => {
-      setYAxisData(lineChartDataTotalSpent(Yaxis));
-      setXAxisData(lineChartOptionsTotalSpent(Xaxis));
+      getLatestKaunasWeather()
+      .then((data) => {
+        const xAxisKaunas = data.map(item => item.observationTimeUtc);
+        const yAxisKaunas = data.map(item => item.airTemperature);
+        setYAxisData(weatherLineChartTemperature(yAxisKaunas));
+        setXAxisData(lineChartOptionsTotalSpent(xAxisKaunas));
+        setIsLoading(false);
+          });
     }, []);
 
     return (
@@ -79,7 +73,7 @@ import {
             textAlign='start'
             fontWeight='700'
             lineHeight='100%'>
-            Latest Weather In Kaunas
+            Latest Weather In Kaunas °C
           </Text>
           {isLoading ? (
             <Flex justifyContent='center' alignItems='center' width='100%'>Loading...</Flex>

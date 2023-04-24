@@ -68,3 +68,7 @@ export function getAllStations() {
 export function getCurrentWeather() {
     return getData(host_server, `/api/weather/current`);
 }
+
+export function getLatestKaunasWeather() {
+    return getData(host_server, `/api/weather/observation?station=kauno-ams&date=latest`);
+}

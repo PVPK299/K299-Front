@@ -10,7 +10,6 @@ import {
   useColorModeValue,
 } from "@chakra-ui/react";
 // Assets
-import Usa from "assets/img/dashboards/usa.png";
 import { WiDaySunny } from "react-icons/wi";
 // Custom components
 import MiniCalendar from "components/calendar/MiniCalendar";
@@ -41,7 +40,7 @@ import tableDataCheck from "views/admin/default/variables/tableDataCheck.json";
 import tableDataComplex from "views/admin/default/variables/tableDataComplex.json";
 import WeatherChart from "components/dataDispaly/WeatherChart";
 
-import { fetchSolarData, getCurrentWeather } from "networking/api";
+import { fetchSolarData, getCurrentWeather, getLatestKaunasWeather } from "networking/api";
 
 import { useState, useEffect } from 'react';
 
@@ -92,7 +91,8 @@ export default function UserReports() {
               fontSize='34px'
               textAlign='start'
               fontWeight='700'
-              lineHeight='100%'>
+              lineHeight='100%'
+              my='10px'>
               Current Weather Data
             </Text>
       <SimpleGrid
@@ -108,7 +108,7 @@ export default function UserReports() {
                     h='56px'
                     bg={boxBg}
                     icon={
-                        <Icon w='32px' h='32px' as={WiDaySunny} color={brandColor} />
+                        <i class="fa-solid fa-temperature-half weather-icon"></i>
                     }
                 />
             }
@@ -122,7 +122,7 @@ export default function UserReports() {
                     h='56px'
                     bg={boxBg}
                     icon={
-                        <Icon w='32px' h='32px' as={WiDaySunny} color={brandColor} />
+                        <i class="fa-solid fa-wind weather-icon"></i>
                     }
                 />
             }
@@ -136,7 +136,7 @@ export default function UserReports() {
                     h='56px'
                     bg={boxBg}
                     icon={
-                        <Icon w='32px' h='32px' as={WiDaySunny} color={brandColor} />
+                        <i class="fa-solid fa-cloud weather-icon"></i>
                     }
                 />
             }
@@ -150,7 +150,7 @@ export default function UserReports() {
                     h='56px'
                     bg={boxBg}
                     icon={
-                        <Icon w='32px' h='32px' as={WiDaySunny} color={brandColor} />
+                        <i class="fa-solid fa-cloud-moon-rain weather-icon"></i>
                     }
                 />
             }
@@ -164,36 +164,13 @@ export default function UserReports() {
                     h='56px'
                     bg={boxBg}
                     icon={
-                        <Icon w='32px' h='32px' as={WiDaySunny} color={brandColor} />
+                        <i class="fa-solid fa-user-large weather-icon"></i>
                     }
                 />
             }
-            textTransform='uppercase'
             name='Condition'
             value={`${conditionCode}`}
         />
-      </SimpleGrid>
-
-      <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
-        <TotalSpent />
-        <WeeklyRevenue />
-      </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
-        <CheckTable columnsData={columnsDataCheck} tableData={tableDataCheck} />
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
-          <DailyTraffic />
-          <PieCard />
-        </SimpleGrid>
-      </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
-        <ComplexTable
-          columnsData={columnsDataComplex}
-          tableData={tableDataComplex}
-        />
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
-          <Tasks />
-          <MiniCalendar h='100%' minW='100%' selectRange={false} />
-        </SimpleGrid>
       </SimpleGrid>
     </Box>
   );

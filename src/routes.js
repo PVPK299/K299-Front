@@ -27,9 +27,9 @@ const routes = [
     component: MainDashboard,
   },
   {
-    name: "Weather Forecast",
+    name: "Weather Information",
     layout: "/admin",
-    path: "/weather-forecast",
+    path: "/weather-information",
     icon: (
       <Icon
         as={SunIcon}
