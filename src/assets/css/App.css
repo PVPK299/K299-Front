@@ -6,3 +6,8 @@ body {
 option {
   color: black;
 }
+
+.weather-icon {
+  color: #6240ff;
+  font-size: 1.25rem;
+}

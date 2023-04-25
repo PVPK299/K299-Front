@@ -13,20 +13,20 @@ import {
   import Card from "components/card/Card.js";
   import LineChart from "components/charts/LineChart";
   import React from "react";
-  import { fetchSolarDataByDate } from "networking/api";
+  import { getLatestKaunasWeather } from "networking/api";
   import { useState, useEffect } from "react";
   import { IoCheckmarkCircle } from "react-icons/io5";
   import { MdBarChart, MdOutlineCalendarToday } from "react-icons/md";
   // Assets
   import { RiArrowUpSFill } from "react-icons/ri";
   import {
-    lineChartDataTotalSpent,
+    weatherLineChartTemperature,
     lineChartOptionsTotalSpent,
   } from "./charts";
   
   export default function TotalACPower(props) {
     const { Yaxis, Xaxis } = props;
-    const [isLoading, setIsLoading] = useState(false);
+    const [isLoading, setIsLoading] = useState(true);
     const [yAxisData, setYAxisData] = useState({});
     const [xAxisData, setXAxisData] = useState({});
     const [dateFromValue, setDateFromValue] = useState("");
@@ -47,22 +47,16 @@ import {
       { bg: "secondaryGray.300" },
       { bg: "whiteAlpha.100" }
     );
-    
-    function filterByDate() {
-      setIsLoading(true);
-      fetchSolarDataByDate(dateFromValue, dateToValue)
-        .then((data) => {
-          const timeArray = data.map(item => item.time);
-          const ACPowerArray = data.map(item => item.total_AC_Power);
-          setYAxisData(lineChartDataTotalSpent(ACPowerArray));
-          setXAxisData(lineChartOptionsTotalSpent(timeArray));
-          setIsLoading(false);
-      });
-    }
 
     useEffect(() => {
-      setYAxisData(lineChartDataTotalSpent(Yaxis));
-      setXAxisData(lineChartOptionsTotalSpent(Xaxis));
+      getLatestKaunasWeather()
+      .then((data) => {
+        const xAxisKaunas = data.map(item => item.observationTimeUtc);
+        const yAxisKaunas = data.map(item => item.airTemperature);
+        setYAxisData(weatherLineChartTemperature(yAxisKaunas));
+        setXAxisData(lineChartOptionsTotalSpent(xAxisKaunas));
+        setIsLoading(false);
+          });
     }, []);
 
     return (
@@ -72,34 +66,15 @@ import {
         direction='column'
         w='100%'
         mb='0px'>
-        <Flex w='100%' flexDirection={{ base: "column", lg: "row" }}>
-          <Flex flexDirection='column' me='20px' mt='28px'>
-            <Text
-              color={textColor}
-              fontSize='34px'
-              textAlign='start'
-              fontWeight='700'
-              lineHeight='100%'>
-              Total AC power
-            </Text>
-            <FormLabel mt='20px' mb='0' ml='1px' fontSize='14px'>Date From</FormLabel>
-            <Input
-              size="sm"
-              type="date"
-              id="date-from"
-              value={dateFromValue}
-              onChange={(e) => setDateFromValue(e.target.value)}/>
-            <FormLabel mt='5px' mb='0' ml='1px' fontSize='14px'>Date To</FormLabel>
-            <Input
-              size="sm"
-              type="date"
-              id="date-to"
-              value={dateToValue}
-              onChange={(e) => setDateToValue(e.target.value)}/>
-            <Button colorScheme='purple' mt='15px' size='sm' onClick={filterByDate}>
-              Filter
-            </Button>
-          </Flex>
+        <Flex w='100%' flexDirection={{ base: "column" }}>
+          <Text
+            color={textColor}
+            fontSize='34px'
+            textAlign='start'
+            fontWeight='700'
+            lineHeight='100%'>
+            Latest Weather In Kaunas °C
+          </Text>
           {isLoading ? (
             <Flex justifyContent='center' alignItems='center' width='100%'>Loading...</Flex>
           ) : (

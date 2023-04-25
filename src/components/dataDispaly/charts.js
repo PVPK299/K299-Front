@@ -8,7 +8,6 @@ export function lineChartDataTotalSpent(props) {
   ];
   return json;
 }
- 
 
 export function lineChartOptionsTotalSpent(props) {
   const json = {
@@ -86,3 +85,12 @@ export function lineChartOptionsTotalSpent(props) {
   return json;
 }
 
+export function weatherLineChartTemperature(props) {
+  const json = [
+    {
+      name: "Temperature °C",
+      data: props,
+    }
+  ];
+  return json;
+}

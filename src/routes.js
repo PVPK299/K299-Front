@@ -1,12 +1,12 @@
 import React from "react";
 
 import { Icon } from "@chakra-ui/react";
+import { SunIcon } from '@chakra-ui/icons'
 import {
   MdBarChart,
   MdPerson,
   MdHome,
   MdLock,
-  MdOutlineShoppingCart,
 } from "react-icons/md";
 
 // Admin Imports
@@ -20,19 +20,19 @@ import RegisterCentered from "views/auth/register";
 
 const routes = [
   {
-    name: "Main Dashboard",
+    name: "Main Information",
     layout: "/admin",
-    path: "/default",
+    path: "/main-information",
     icon: <Icon as={MdHome} width='20px' height='20px' color='inherit' />,
     component: MainDashboard,
   },
   {
-    name: "NFT Marketplace",
+    name: "Weather Information",
     layout: "/admin",
-    path: "/nft-marketplace",
+    path: "/weather-information",
     icon: (
       <Icon
-        as={MdOutlineShoppingCart}
+        as={SunIcon}
         width='20px'
         height='20px'
         color='inherit'

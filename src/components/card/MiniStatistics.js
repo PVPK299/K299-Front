@@ -38,6 +38,7 @@ export default function Default(props) {
           </StatLabel>
           <StatNumber
             color={textColor}
+            textTransform='capitalize'
             fontSize={{
               base: "2xl",
             }}>
