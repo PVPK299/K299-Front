@@ -11,3 +11,9 @@ option {
   color: #6240ff;
   font-size: 1.25rem;
 }
+
+.sidebar-logo {
+  font-size: 2rem;
+  font-weight: 600;
+  margin: 32px 0;
+}

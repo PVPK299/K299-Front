@@ -19,9 +19,10 @@ import IconBox from "components/icons/IconBox";
 import React from "react";
 import {
   MdAddTask,
-  MdAttachMoney,
   MdBarChart,
   MdFileCopy,
+  MdOutlineToday,
+  MdOutlineQueryStats
 } from "react-icons/md";
 import CheckTable from "views/admin/default/components/CheckTable";
 import ComplexTable from "views/admin/default/components/ComplexTable";
@@ -41,7 +42,7 @@ import tableDataComplex from "views/admin/default/variables/tableDataComplex.jso
 import DataTable from "components/dataDispaly/DataTable";
 import TotalACPower from "components/dataDispaly/TotalACPower";
 
-import { fetchSolarData } from "networking/api";
+import { fetchSolarData, fetchSolarDataByID, getCurrentWeather } from "networking/api";
 
 
 import { useState, useEffect } from 'react';
@@ -55,18 +56,35 @@ export default function UserReports() {
   const [data, setData] = useState(null);
   const [ac, setAc] = useState(null);
   const [time, setTime] = useState(null);
+  const [totalGenerated, setTotalGenerated] = useState(null);
+  const [todayGenerated, setTodayGenerated] = useState(null);
+  const [totalOperationDays, setTotalOperationDays] = useState(null);
+  const [cloudCover, setCloudCover] = useState(null);
+  const [conditionCode, setConditionCode] = useState(null);
 
   // TODO: sita logika reikia perkelti i atskira komponenta kartu su chart'u
   useEffect(() => {
     fetchSolarData(60, 63)
       .then((data) => {
-        console.log(data);
-
         setAc(data.map((obj) => obj.total_AC_Power));
         setTime(data.map((obj) => obj.time));
         setData(data);
       });
 
+    fetchSolarDataByID(1)
+      .then((data) => {
+          console.log(data);
+          setTotalGenerated(data.total_Energy);
+          setTodayGenerated(data.daily_Energy);
+          const totalOperationDays = data.total_Operation_Hours / 24;
+          setTotalOperationDays(totalOperationDays % 2 === 0 ? totalOperationDays : totalOperationDays.toFixed(2));
+      });
+    
+    getCurrentWeather()
+          .then((data) => {
+            setCloudCover(data.cloudCover);
+            setConditionCode(data.conditionCode === "null" ? "-" : data.conditionCode.replace(/-/g, " "));
+          });
 
   }, []);
 
@@ -87,7 +105,21 @@ export default function UserReports() {
         columns={{ base: 1, md: 2, lg: 3, "2xl": 6 }}
         gap='20px'
         mb='20px'>
-        <MiniWeather />
+        <MiniStatistics
+          startContent={
+            <IconBox
+              w='56px'
+              h='56px'
+              bg={boxBg}
+              icon={
+                <Icon w='32px' h='32px' as={MdOutlineQueryStats} color={brandColor} />
+              }
+            />
+          }
+          name='Total Generated'
+          value={totalGenerated}
+          symbol='kW'
+        />
         <MiniStatistics
           startContent={
             <IconBox
@@ -99,8 +131,9 @@ export default function UserReports() {
               }
             />
           }
-          name='Earnings'
-          value='$350.4'
+          name='Generated Today'
+          value={todayGenerated}
+          symbol='kW'
         />
         <MiniStatistics
           startContent={
@@ -109,83 +142,43 @@ export default function UserReports() {
               h='56px'
               bg={boxBg}
               icon={
-                <Icon w='32px' h='32px' as={MdAttachMoney} color={brandColor} />
+                <Icon w='32px' h='32px' as={MdOutlineToday} color={brandColor} />
               }
             />
           }
-          name='Spend this month'
-          value='$642.39'
+          name='Total Operation Days'
+          value={totalOperationDays}
+          symbol='Days'
         />
-        <MiniStatistics growth='+23%' name='Sales' value='$574.34' />
+        <MiniWeather />
         <MiniStatistics
-          endContent={
-            <Flex me='-16px' mt='10px'>
-              <FormLabel htmlFor='balance'>
-                <Avatar src={Usa} />
-              </FormLabel>
-              <Select
-                id='balance'
-                variant='mini'
-                mt='5px'
-                me='0px'
-                defaultValue='usd'>
-                <option value='usd'>USD</option>
-                <option value='eur'>EUR</option>
-                <option value='gba'>GBA</option>
-              </Select>
-            </Flex>
-          }
-          name='Your balance'
-          value='$1,000'
+            startContent={
+                <IconBox
+                    w='56px'
+                    h='56px'
+                    bg={boxBg}
+                    icon={
+                        <i class="fa-solid fa-cloud weather-icon"></i>
+                    }
+                />
+            }
+            name='Cloud Cover'
+            value={cloudCover == null ? "- %" : `${cloudCover} %`}
         />
         <MiniStatistics
-          startContent={
-            <IconBox
-              w='56px'
-              h='56px'
-              bg='linear-gradient(90deg, #4481EB 0%, #04BEFE 100%)'
-              icon={<Icon w='28px' h='28px' as={MdAddTask} color='white' />}
-            />
-          }
-          name='New Tasks'
-          value='154'
+            startContent={
+                <IconBox
+                    w='56px'
+                    h='56px'
+                    bg={boxBg}
+                    icon={
+                        <i class="fa-solid fa-user-large weather-icon"></i>
+                    }
+                />
+            }
+            name='Condition'
+            value={conditionCode == null ? "-" : `${conditionCode}`}
         />
-        <MiniStatistics
-          startContent={
-            <IconBox
-              w='56px'
-              h='56px'
-              bg={boxBg}
-              icon={
-                <Icon w='32px' h='32px' as={MdFileCopy} color={brandColor} />
-              }
-            />
-          }
-          name='Total Projects'
-          value='2935'
-        />
-      </SimpleGrid>
-
-      <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px' mb='20px'>
-        <TotalSpent />
-        <WeeklyRevenue />
-      </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
-        <CheckTable columnsData={columnsDataCheck} tableData={tableDataCheck} />
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
-          <DailyTraffic />
-          <PieCard />
-        </SimpleGrid>
-      </SimpleGrid>
-      <SimpleGrid columns={{ base: 1, md: 1, xl: 2 }} gap='20px' mb='20px'>
-        <ComplexTable
-          columnsData={columnsDataComplex}
-          tableData={tableDataComplex}
-        />
-        <SimpleGrid columns={{ base: 1, md: 2, xl: 2 }} gap='20px'>
-          <Tasks />
-          <MiniCalendar h='100%' minW='100%' selectRange={false} />
-        </SimpleGrid>
       </SimpleGrid>
     </Box>
   );

@@ -55,14 +55,14 @@ import {
           const timeArray = data.map(item => item.time);
           const ACPowerArray = data.map(item => item.total_AC_Power);
           setYAxisData(lineChartDataTotalSpent(ACPowerArray));
-          setXAxisData(lineChartOptionsTotalSpent(timeArray));
+          setXAxisData(lineChartOptionsTotalSpent(timeArray.map((element) => element.replace('T', ' ').substring(0, 19))));
           setIsLoading(false);
       });
     }
 
     useEffect(() => {
       setYAxisData(lineChartDataTotalSpent(Yaxis));
-      setXAxisData(lineChartOptionsTotalSpent(Xaxis));
+      setXAxisData(lineChartOptionsTotalSpent(Xaxis.map((element) => element.replace('T', ' ').substring(0, 19))));
     }, []);
 
     return (

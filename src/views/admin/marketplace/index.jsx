@@ -113,7 +113,7 @@ export default function UserReports() {
                 />
             }
             name='Feels Like'
-            value={`${feelsLikeTemperature} °C`}
+            value={feelsLikeTemperature == null ? "- °C" : `${feelsLikeTemperature} °C`}
         />
         <MiniStatistics
             startContent={
@@ -127,7 +127,7 @@ export default function UserReports() {
                 />
             }
             name='Curr. Wind'
-            value={`${windSpeed} m/s`}
+            value={windSpeed == null ? "- m/s" : `${windSpeed} m/s`}
         />
         <MiniStatistics
             startContent={
@@ -141,7 +141,7 @@ export default function UserReports() {
                 />
             }
             name='Cloud Cover'
-            value={`${cloudCover} %`}
+            value={cloudCover == null ? "- %" : `${cloudCover} %`}
         />
         <MiniStatistics
             startContent={
@@ -155,7 +155,7 @@ export default function UserReports() {
                 />
             }
             name='Precipitation'
-            value={`${precipitation} %`}
+            value={precipitation == null ? "- %" : `${precipitation} %`}
         />
         <MiniStatistics
             startContent={
@@ -169,7 +169,7 @@ export default function UserReports() {
                 />
             }
             name='Condition'
-            value={`${conditionCode}`}
+            value={conditionCode == null ? "-" : `${conditionCode}`}
         />
       </SimpleGrid>
     </Box>

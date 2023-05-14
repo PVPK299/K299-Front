@@ -53,6 +53,10 @@ export function registerUser(newUser) {
     return postData(host_server, `/api/auth/register`, newUser)
 }
 
+export function fetchSolarDataByID(ID) {
+    return getData(host_server, `/api/SolarData/GetSolarDataByID/${ID}`);
+}
+
 export function fetchSolarData(fromID, toID) {
     return getData(host_server, `/api/SolarData/GetByIDFromTo/${fromID}/${toID}`);
 }

@@ -18,7 +18,6 @@ export default function MiniCalendar(props) {
     useEffect(() => {
         getCurrentWeather()
             .then((data) => {
-                console.log(data);
                 setWeather(data);
             });
     }, []);
