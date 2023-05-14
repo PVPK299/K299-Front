@@ -80,7 +80,7 @@ import {
               textAlign='start'
               fontWeight='700'
               lineHeight='100%'>
-              Total AC power
+              AC power
             </Text>
             <FormLabel mt='20px' mb='0' ml='1px' fontSize='14px'>Date From</FormLabel>
             <Input
@@ -105,7 +105,7 @@ import {
           ) : (
             <>
               {Object.keys(yAxisData).length > 0 && Object.keys(xAxisData).length > 0 && (
-                <Box minH='280px' minW='75%' mt='auto'>
+                <Box minH='280px' mt='auto' flexGrow={1}>
                   <LineChart
                     chartData={yAxisData}
                     chartOptions={xAxisData}

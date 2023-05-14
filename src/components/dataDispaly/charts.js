@@ -85,10 +85,10 @@ export function lineChartOptionsTotalSpent(props) {
   return json;
 }
 
-export function weatherLineChartTemperature(props) {
+export function weatherLineChartCloudCover(props) {
   const json = [
     {
-      name: "Temperature °C",
+      name: "Cloud Cover, %",
       data: props,
     }
   ];

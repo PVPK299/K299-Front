@@ -20,7 +20,7 @@ import {
   // Assets
   import { RiArrowUpSFill } from "react-icons/ri";
   import {
-    weatherLineChartTemperature,
+    weatherLineChartCloudCover,
     lineChartOptionsTotalSpent,
   } from "./charts";
   
@@ -50,11 +50,11 @@ import {
 
     useEffect(() => {
       getLatestKaunasWeather()
-      .then((data) => {
+        .then((data) => {
         const xAxisKaunas = data.map(item => item.observationTimeUtc);
-        const yAxisKaunas = data.map(item => item.airTemperature);
-        setYAxisData(weatherLineChartTemperature(yAxisKaunas));
-        setXAxisData(lineChartOptionsTotalSpent(xAxisKaunas));
+        const yAxisKaunas = data.map(item => item.cloudCover);
+        setYAxisData(weatherLineChartCloudCover(yAxisKaunas));
+        setXAxisData(lineChartOptionsTotalSpent(xAxisKaunas.map((element) => element.replace('T', ' ').substring(0, 19))));
         setIsLoading(false);
           });
     }, []);
@@ -73,7 +73,7 @@ import {
             textAlign='start'
             fontWeight='700'
             lineHeight='100%'>
-            Latest Weather In Kaunas °C
+            Latest Cloud Cover In Kaunas, %
           </Text>
           {isLoading ? (
             <Flex justifyContent='center' alignItems='center' width='100%'>Loading...</Flex>

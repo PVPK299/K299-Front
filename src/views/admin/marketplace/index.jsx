@@ -60,8 +60,6 @@ export default function UserReports() {
   useEffect(() => {
     fetchSolarData(60, 63)
       .then((data) => {
-        console.log(data);
-
         setAc(data.map((obj) => obj.total_AC_Power));
         setTime(data.map((obj) => obj.time));
         setData(data);

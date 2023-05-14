@@ -11,9 +11,6 @@ class ColumnChart extends Component {
   }
 
   componentDidMount() {
-    console.log('bar chart')
-    console.log(this.props.chartData);
-    console.log(this.props.chartOptions);
     this.setState({
       chartData: this.props.chartData,
       chartOptions: this.props.chartOptions,

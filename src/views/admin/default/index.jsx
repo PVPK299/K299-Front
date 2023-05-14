@@ -64,7 +64,7 @@ export default function UserReports() {
 
   // TODO: sita logika reikia perkelti i atskira komponenta kartu su chart'u
   useEffect(() => {
-    fetchSolarData(60, 63)
+    fetchSolarData(50, 70)
       .then((data) => {
         setAc(data.map((obj) => obj.total_AC_Power));
         setTime(data.map((obj) => obj.time));
@@ -73,7 +73,6 @@ export default function UserReports() {
 
     fetchSolarDataByID(1)
       .then((data) => {
-          console.log(data);
           setTotalGenerated(data.total_Energy);
           setTodayGenerated(data.daily_Energy);
           const totalOperationDays = data.total_Operation_Hours / 24;
@@ -117,8 +116,7 @@ export default function UserReports() {
             />
           }
           name='Total Generated'
-          value={totalGenerated}
-          symbol='kW'
+          value={totalGenerated == null ? "- kW" : `${totalGenerated} kW`}
         />
         <MiniStatistics
           startContent={
@@ -132,8 +130,7 @@ export default function UserReports() {
             />
           }
           name='Generated Today'
-          value={todayGenerated}
-          symbol='kW'
+          value={todayGenerated == null ? "- kW" : `${todayGenerated} kW`}
         />
         <MiniStatistics
           startContent={
@@ -147,8 +144,7 @@ export default function UserReports() {
             />
           }
           name='Total Operation Days'
-          value={totalOperationDays}
-          symbol='Days'
+          value={totalOperationDays == null ? "- Days" : `${totalOperationDays} Days`}
         />
         <MiniWeather />
         <MiniStatistics
