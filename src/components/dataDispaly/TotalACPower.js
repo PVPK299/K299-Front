@@ -55,14 +55,14 @@ import {
           const timeArray = data.map(item => item.time);
           const ACPowerArray = data.map(item => item.total_AC_Power);
           setYAxisData(lineChartDataTotalSpent(ACPowerArray));
-          setXAxisData(lineChartOptionsTotalSpent(timeArray));
+          setXAxisData(lineChartOptionsTotalSpent(timeArray.map((element) => element.replace('T', ' ').substring(0, 19))));
           setIsLoading(false);
       });
     }
 
     useEffect(() => {
       setYAxisData(lineChartDataTotalSpent(Yaxis));
-      setXAxisData(lineChartOptionsTotalSpent(Xaxis));
+      setXAxisData(lineChartOptionsTotalSpent(Xaxis.map((element) => element.replace('T', ' ').substring(0, 19))));
     }, []);
 
     return (
@@ -80,7 +80,7 @@ import {
               textAlign='start'
               fontWeight='700'
               lineHeight='100%'>
-              Total AC power
+              AC power
             </Text>
             <FormLabel mt='20px' mb='0' ml='1px' fontSize='14px'>Date From</FormLabel>
             <Input
@@ -105,7 +105,7 @@ import {
           ) : (
             <>
               {Object.keys(yAxisData).length > 0 && Object.keys(xAxisData).length > 0 && (
-                <Box minH='280px' minW='75%' mt='auto'>
+                <Box minH='280px' mt='auto' flexGrow={1}>
                   <LineChart
                     chartData={yAxisData}
                     chartOptions={xAxisData}

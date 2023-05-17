@@ -14,7 +14,7 @@ import Card from "components/card/Card.js";
 import React from "react";
 
 export default function Default(props) {
-  const { startContent, endContent, name, growth, value } = props;
+  const { startContent, endContent, name, growth, value, symbol } = props;
   const textColor = useColorModeValue("secondaryGray.900", "white");
   const textColorSecondary = "secondaryGray.600";
 
@@ -42,7 +42,7 @@ export default function Default(props) {
             fontSize={{
               base: "2xl",
             }}>
-            {value}
+            {value} { symbol ? symbol : '' }
           </StatNumber>
           {growth ? (
             <Flex align='center'>

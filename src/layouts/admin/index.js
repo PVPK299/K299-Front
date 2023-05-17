@@ -136,7 +136,7 @@ export default function Dashboard(props) {
             <Box>
               <Navbar
                 onOpen={onOpen}
-                logoText={"Horizon UI Dashboard PRO"}
+                logoText={"K299 Solar Park Tracking"}
                 brandText={getActiveRoute(routes)}
                 secondary={getActiveNavbar(routes)}
                 message={getActiveNavbarText(routes)}
@@ -155,7 +155,7 @@ export default function Dashboard(props) {
               pt='50px'>
               <Switch>
                 {getRoutes(routes)}
-                <Redirect from='/' to='/admin/default' />
+                <Redirect from='/' to='/admin/main-information' />
               </Switch>
             </Box>
           ) : null}

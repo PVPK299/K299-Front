@@ -52,25 +52,6 @@ export default function HeaderLinks(props) {
 			borderRadius="30px"
 			boxShadow={shadow}>
 			<SearchBar mb={secondary ? { base: '10px', md: 'unset' } : 'unset'} me="10px" borderRadius="30px" />
-			<Flex
-				bg={ethBg}
-				display={secondary ? 'flex' : 'none'}
-				borderRadius="30px"
-				ms="auto"
-				p="6px"
-				align="center"
-				me="6px">
-				<Flex align="center" justify="center" bg={ethBox} h="29px" w="29px" borderRadius="30px" me="7px">
-					<Icon color={ethColor} w="9px" h="14px" as={FaEthereum} />
-				</Flex>
-				<Text w="max-content" color={ethColor} fontSize="sm" fontWeight="700" me="6px">
-					1,924
-					<Text as="span" display={{ base: 'none', md: 'unset' }}>
-						{' '}
-						ETH
-					</Text>
-				</Text>
-			</Flex>
 			<SidebarResponsive routes={routes} />
 			<Menu>
 				<MenuButton p="0px">
@@ -90,16 +71,10 @@ export default function HeaderLinks(props) {
 						<Text fontSize="md" fontWeight="600" color={textColor}>
 							Notifications
 						</Text>
-						<Text fontSize="sm" fontWeight="500" color={textColorBrand} ms="auto" cursor="pointer">
-							Mark all read
-						</Text>
 					</Flex>
 					<Flex flexDirection="column">
 						<MenuItem _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} px="0" borderRadius="8px" mb="10px">
-							<ItemContent info="Horizon UI Dashboard PRO" aName="Alicia" />
-						</MenuItem>
-						<MenuItem _hover={{ bg: 'none' }} _focus={{ bg: 'none' }} px="0" borderRadius="8px" mb="10px">
-							<ItemContent info="Horizon Design System Free" aName="Josh Henry" />
+							<ItemContent info="New Weather Forecast" />
 						</MenuItem>
 					</Flex>
 				</MenuList>
