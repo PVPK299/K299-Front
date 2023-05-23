@@ -24,7 +24,7 @@ import InputLabel from "./components/InputLabel.js";
 import TextInputField from "./components/TextInputField.js";
 
 // Assets
-import illustration from "assets/img/auth/auth.png";
+import illustration from "assets/img/auth/auth.jpg";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 
