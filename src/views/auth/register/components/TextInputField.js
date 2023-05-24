@@ -1,6 +1,6 @@
 import { useColorModeValue, Input } from "@chakra-ui/react";
 
-const TextInputField = ({ name, type, placeholder, minLength, onChange }) => {
+const TextInputField = ({ name, type, placeholder, minLength, onChange, value }) => {
     return (
         <Input
             name={name}
@@ -12,6 +12,7 @@ const TextInputField = ({ name, type, placeholder, minLength, onChange }) => {
             placeholder={placeholder}
             minLength={minLength}
             onChange={onChange}
+            value={value}
             mb='24px'
             fontWeight='500'
             size='lg'

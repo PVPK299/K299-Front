@@ -24,7 +24,8 @@ export default function fetchData(host, endpoint, options) {
             // Successful response, parse the JSON and return the data
             return response.json();
         }).catch(error => {
-            console.error('There was an error!', error);
+            console.error('api.js:', error);
+            return { "error": error };
         });
 }
 
@@ -46,11 +47,25 @@ export function postData(host, endpoint, body) {
     return fetchData(host, endpoint, options);
 }
 
+export function patchData(host, endpoint, body) {
+    const options = {
+        method: 'PATCH',
+        headers: HEADERS,
+        body: JSON.stringify(body)
+    };
+    return fetchData(host, endpoint, options);
+}
+
+
 export function registerUser(newUser) {
     if (!(newUser instanceof NewUser)) {
         throw new Error('trying to register user, which is not of type NewUser');
     }
     return postData(host_server, `/api/auth/register`, newUser)
+}
+
+export function updateUser(body) {
+    return patchData(host_server, `/api/auth/update`, body)
 }
 
 export function fetchSolarDataByID(ID) {
