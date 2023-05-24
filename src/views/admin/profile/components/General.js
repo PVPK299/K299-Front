@@ -1,20 +1,53 @@
 // Chakra imports
-import { SimpleGrid, Text, useColorModeValue } from "@chakra-ui/react";
+import { SimpleGrid, Text, useColorModeValue, InputGroup, FormControl, Button } from "@chakra-ui/react";
 // Custom components
 import Card from "components/card/Card.js";
-import React from "react";
+import { useEffect } from "react";
+import { React, useState } from "react";
 import Information from "views/admin/profile/components/Information";
+
+import InputLabel from "views/auth/register/components/InputLabel.js";
+import TextInputField from "views/auth/register/components/TextInputField.js";
+import { updateUser } from "networking/api.js";
+
 
 // Assets
 export default function GeneralInformation(props) {
   const { ...rest } = props;
+
   // Chakra Color Mode
   const textColorPrimary = useColorModeValue("secondaryGray.900", "white");
-  const textColorSecondary = "gray.400";
-  const cardShadow = useColorModeValue(
-    "0px 18px 40px rgba(112, 144, 176, 0.12)",
-    "unset"
-  );
+
+  const user = props.user;
+
+  const [email, setEmail] = useState(user?.email)
+  const [password, setPassword] = useState(user?.password)
+  const [first_name, setFirstName] = useState(user?.first_name)
+  const [last_name, setLastName] = useState(user?.last_name)
+
+  useEffect(() => {
+    setEmail(user?.email);
+    setPassword(user?.password);
+    setFirstName(user?.first_name);
+    setLastName(user?.last_name);
+  }, [user]);
+
+  const handleSave = () => {
+    updateUser({
+      id: user.id,
+      email: email,
+    }).then(updatedUser => {
+      console.log(updatedUser);
+
+      if (updatedUser['error'] === null) {
+        localStorage.setItem('user', JSON.stringify(updateUser));
+      } else {
+        console.error('There was an error. User profile is no updated in localStorage');
+      }
+    })
+  }
+
+
   return (
     <Card mb={{ base: "0px", "2xl": "20px" }} {...rest}>
       <Text
@@ -23,47 +56,57 @@ export default function GeneralInformation(props) {
         fontSize='2xl'
         mt='10px'
         mb='4px'>
-        General Information
+        Edit profile
       </Text>
-      <Text color={textColorSecondary} fontSize='md' me='26px' mb='40px'>
-        As we live, our hearts turn colder. Cause pain is what we go through as
-        we become older. We get insulted by others, lose trust for those others.
-        We get back stabbed by friends. It becomes harder for us to give others
-        a hand. We get our heart broken by people we love, even that we give
-        them all...
-      </Text>
-      <SimpleGrid columns='2' gap='20px'>
-        <Information
-          boxShadow={cardShadow}
-          title='Education'
-          value='Stanford University'
+      <FormControl>
+        <InputLabel text="Email" />
+        <TextInputField
+          type='email'
+          placeholder='email'
+          value={email}
+          onChange={(e) => { setEmail(e.target.value) }}
         />
-        <Information
-          boxShadow={cardShadow}
-          title='Languages'
-          value='English, Spanish, Italian'
+
+        <InputLabel text="Password" />
+        <InputGroup size='md'>
+          <TextInputField
+            type='text'
+            minLength={8}
+            placeholder='Min. 8 characters'
+            value={password}
+            onChange={(e) => { setPassword(e.target.value) }}
+          />
+
+        </InputGroup>
+
+        <InputLabel text="First name" />
+        <TextInputField
+          type='name'
+          minLength={2}
+          placeholder='John'
+          value={first_name}
+          onChange={(e) => { setFirstName(e.target.value) }}
         />
-        <Information
-          boxShadow={cardShadow}
-          title='Department'
-          value='Product Design'
+        <InputLabel text="Last name" />
+        <TextInputField
+          type='name'
+          minLength={2}
+          placeholder='Sunny'
+          value={last_name}
+          onChange={(e) => { setLastName(e.target.value) }}
         />
-        <Information
-          boxShadow={cardShadow}
-          title='Work History'
-          value='Google, Facebook'
-        />
-        <Information
-          boxShadow={cardShadow}
-          title='Organization'
-          value='Simmmple Web LLC'
-        />
-        <Information
-          boxShadow={cardShadow}
-          title='Birthday'
-          value='20 July 1986'
-        />
-      </SimpleGrid>
-    </Card>
+        <Button
+          fontSize='sm'
+          variant='brand'
+          fontWeight='500'
+          w='100%'
+          h='50'
+          mb='24px'
+          onClick={handleSave}
+        >
+          Save changes
+        </Button>
+      </FormControl>
+    </Card >
   );
 }

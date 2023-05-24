@@ -1,7 +1,7 @@
 import React from "react";
 import { useState, Component, PropTypes } from "react";
 
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 // Chakra imports
 import {
@@ -32,7 +32,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { NewUser } from "models/user.js";
-import { registerUser, getAllStations } from "networking/api.js";
+import { registerUser } from "networking/api.js";
 
 
 
@@ -55,20 +55,18 @@ function RegisterCentered() {
   const [firstName, setFirstName] = useState("")
   const [lastName, setLastName] = useState("")
 
-
-
-  const notify = () => toast("Wow so easy!");
+  const history = useHistory();
 
   const register = () => {
-    // var newUser = new NewUser(email, password, firstName, lastName);
+    var newUser = new NewUser(email, password, firstName, lastName);
 
-    // console.log(newUser);
-    // registerUser(newUser).then((message) => {
-    //   notify();
-    //   console.log(message);
-    // });
+    console.log(newUser);
+    registerUser(newUser).then((user) => {
+      console.log(user);
 
-    getAllStations();
+      localStorage.setItem('user', JSON.stringify(user));
+      history.push('/');
+    });
   };
 
   return (
