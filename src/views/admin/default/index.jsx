@@ -42,7 +42,7 @@ import tableDataComplex from "views/admin/default/variables/tableDataComplex.jso
 import DataTable from "components/dataDispaly/DataTable";
 import TotalACPower from "components/dataDispaly/TotalACPower";
 
-import { fetchSolarData, fetchSolarDataByID, getCurrentWeather } from "networking/api";
+import { fetchSolarData, fetchSolarDataByID, getCurrentWeather, getLastID } from "networking/api";
 
 
 import { useState, useEffect } from 'react';
@@ -61,16 +61,15 @@ export default function UserReports() {
   const [totalOperationDays, setTotalOperationDays] = useState(null);
   const [cloudCover, setCloudCover] = useState(null);
   const [conditionCode, setConditionCode] = useState(null);
-
+ 
   // TODO: sita logika reikia perkelti i atskira komponenta kartu su chart'u
   useEffect(() => {
-    fetchSolarData(50, 70)
+    fetchSolarData(1,10)
       .then((data) => {
         setAc(data.map((obj) => obj.total_AC_Power));
         setTime(data.map((obj) => obj.time));
         setData(data);
       });
-
     fetchSolarDataByID(1)
       .then((data) => {
           setTotalGenerated(data.total_Energy);

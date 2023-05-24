@@ -47,7 +47,6 @@ import {
       { bg: "secondaryGray.300" },
       { bg: "whiteAlpha.100" }
     );
-    
     function filterByDate() {
       setIsLoading(true);
       fetchSolarDataByDate(dateFromValue, dateToValue)

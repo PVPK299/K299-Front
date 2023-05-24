@@ -32,7 +32,7 @@ function SidebarContent(props) {
 
   const handleSignOut = () => {
     localStorage.removeItem('user');
-    history.push('/');
+    history.push('/auth/login');
   }
 
   // SIDEBAR

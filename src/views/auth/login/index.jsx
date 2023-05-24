@@ -60,7 +60,7 @@ function LoginCentered() {
         notify();
         var newUser = new NewUser(data.email, data.password, data.first_name, data.last_name, data.park_share);
         localStorage.setItem('user', JSON.stringify(newUser))
-        history.push('/');
+        history.push('/admin/main-information');
       }
       else
       {

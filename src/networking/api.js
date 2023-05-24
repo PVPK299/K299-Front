@@ -69,7 +69,7 @@ export function updateUser(body) {
 }
 
 export function fetchSolarDataByID(ID) {
-    return getData(host_server, `/api/SolarData/GetSolarDataByID/${ID}`);
+    return getData(host_server, `/api/SolarData/GetDataByID/${ID}`);
 }
 
 export function fetchSolarData(fromID, toID) {
@@ -94,4 +94,7 @@ export function getLatestKaunasWeather() {
 
 export function loginUser(email, password) {
     return getData(host_server, `/api/auth/login/${email}/${password}`);
+}
+export function getLastID() {
+    return getData(host_server, `/api/SolarData/GetLastID`);
 }

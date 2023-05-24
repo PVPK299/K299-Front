@@ -65,7 +65,7 @@ function RegisterCentered() {
       console.log(user);
 
       localStorage.setItem('user', JSON.stringify(user));
-      history.push('/');
+      history.push('/admin/main-information');
     });
   };
 
