@@ -17,6 +17,7 @@ import DataTables from "views/admin/dataTables";
 
 // Auth Imports
 import RegisterCentered from "views/auth/register";
+import LoginCentered from "views/auth/login";
 
 const routes = [
   {
@@ -61,6 +62,13 @@ const routes = [
     path: "/register",
     icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
     component: RegisterCentered,
+  },
+  {
+    name: "Login",
+    layout: "/auth",
+    path: "/login",
+    icon: <Icon as={MdLock} width='20px' height='20px' color='inherit' />,
+    component: LoginCentered,
   },
 ];
 

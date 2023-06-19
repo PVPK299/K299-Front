@@ -24,49 +24,50 @@ import InputLabel from "./components/InputLabel.js";
 import TextInputField from "./components/TextInputField.js";
 
 // Assets
-import illustration from "assets/img/auth/auth.jpg";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import { RiEyeCloseLine } from "react-icons/ri";
 
+import illustration from "assets/img/auth/Solar-login.jpeg";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import { NewUser } from "models/user.js";
-import { registerUser } from "networking/api.js";
+import { loginUser, getAllStations } from "networking/api.js";
 
-
-
-
-function RegisterCentered() {
-
+function LoginCentered() {
 
   // Chakra color mode
   const textColor = useColorModeValue("navy.700", "white");
   const textColorSecondary = "gray.400";
   const textColorDetails = useColorModeValue("navy.700", "secondaryGray.600");
   const textColorBrand = useColorModeValue("brand.500", "white");
+  const history = useHistory();
 
   const [show, setShow] = React.useState(false);
   const handleClick = () => setShow(!show);
 
   const [email, setEmail] = useState("")
   const [password, setPassword] = useState("")
-  const [rePassword, setRePassword] = useState("")
-  const [firstName, setFirstName] = useState("")
-  const [lastName, setLastName] = useState("")
 
-  const history = useHistory();
+  const failedlogin = () => toast("Failed to login");
+  const notify = () => toast("Logging you in");
 
-  const register = () => {
-    var newUser = new NewUser(email, password, firstName, lastName);
-
-    console.log(newUser);
-    registerUser(newUser).then((user) => {
-      console.log(user);
-
-      localStorage.setItem('user', JSON.stringify(user));
-      history.push('/admin/main-information');
-    });
+  const login = () => {
+    
+    loginUser(email, password).then((data) => {
+      console.log(data);
+      if(data.error == null){
+        notify();
+        var newUser = new NewUser(data.email, data.password, data.first_name, data.last_name, data.park_share);
+        localStorage.setItem('user', JSON.stringify(newUser))
+        history.push('/admin/main-information');
+      }
+      else
+      {
+        failedlogin();
+      }
+  });
+    getAllStations();
   };
 
   return (
@@ -85,7 +86,7 @@ function RegisterCentered() {
         flexDirection='column'>
         <Box me='auto'>
           <Heading color={textColor} fontSize='36px' mb='10px'>
-            Register
+            Login
           </Heading>
           <Text
             mb='36px'
@@ -93,7 +94,7 @@ function RegisterCentered() {
             color={textColorSecondary}
             fontWeight='400'
             fontSize='md'>
-            All you have to do is entering your email and password to register!
+            All you have to do is entering your email and password to login!
           </Text>
         </Box>
         <Flex
@@ -116,13 +117,11 @@ function RegisterCentered() {
               placeholder='example@mail.com'
               onChange={(e) => { setEmail(e.target.value) }}
             />
-
-            <InputLabel text="Password" />
             <InputGroup size='md'>
               <TextInputField
                 type='password'
                 minLength={8}
-                placeholder='Min. 8 characters'
+                placeholder='password'
                 onChange={(e) => { setPassword(e.target.value) }}
               />
               <InputRightElement display='flex' alignItems='center' mt='4px'>
@@ -134,37 +133,6 @@ function RegisterCentered() {
                 />
               </InputRightElement>
             </InputGroup>
-            <InputLabel text="Re-password" />
-            <InputGroup size='md'>
-              <TextInputField
-                type='password'
-                minLength={8}
-                placeholder='repeat password'
-                onChange={(e) => { setRePassword(e.target.value) }}
-              />
-              <InputRightElement display='flex' alignItems='center' mt='4px'>
-                <Icon
-                  color={textColorSecondary}
-                  _hover={{ cursor: "pointer" }}
-                  as={show ? RiEyeCloseLine : MdOutlineRemoveRedEye}
-                  onClick={handleClick}
-                />
-              </InputRightElement>
-            </InputGroup>
-            <InputLabel text="First name" />
-            <TextInputField
-              type='name'
-              minLength={2}
-              placeholder='John'
-              onChange={(e) => { setFirstName(e.target.value) }}
-            />
-            <InputLabel text="Last name" />
-            <TextInputField
-              type='name'
-              minLength={2}
-              placeholder='Sunny'
-              onChange={(e) => { setLastName(e.target.value) }}
-            />
             <Button
               fontSize='sm'
               variant='brand'
@@ -172,8 +140,8 @@ function RegisterCentered() {
               w='100%'
               h='50'
               mb='24px'
-              onClick={register}>
-              Register
+              onClick={login}>
+              Login
             </Button>
           </FormControl>
           <Flex
@@ -183,24 +151,23 @@ function RegisterCentered() {
             maxW='100%'
             mt='0px'>
             <Text color={textColorDetails} fontWeight='400' fontSize='14px'>
-              Already have an account?
-              <NavLink to='/auth/login'>
+              Don't have an account?
+              <NavLink to='/auth/register'>
                 <Text
                   color={textColorBrand}
                   as='span'
                   ms='5px'
                   fontWeight='500'>
-                  Login
+                  Register
                 </Text>
               </NavLink>
             </Text>
           </Flex>
         </Flex>
       </Flex>
-
       <ToastContainer />
     </DefaultAuth>
   );
 }
 
-export default RegisterCentered;
+export default LoginCentered;

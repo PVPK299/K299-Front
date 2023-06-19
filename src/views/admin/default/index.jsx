@@ -70,7 +70,7 @@ import { weatherLineChartCloudCover, lineChartOptionsTotalSpent, LineChartData }
 import WeatherChart from "components/dataDispaly/WeatherChart";
 
 
-import { fetchSolarData, fetchSolarDataByID, getCurrentWeather } from "networking/api";
+import { fetchSolarData, fetchSolarDataByID, getCurrentWeather, getLastID } from "networking/api";
 
 
 import { useState, useEffect } from 'react';
@@ -89,6 +89,7 @@ export default function UserReports() {
   const [totalOperationDays, setTotalOperationDays] = useState(null);
   const [cloudCover, setCloudCover] = useState(null);
   const [conditionCode, setConditionCode] = useState(null);
+<<<<<<< HEAD
 
   const [totalGenerated2, setTotalGenerated2] = useState(null);
   const [pV1_Voltage, setPV1_Voltage] = useState(null);
@@ -96,9 +97,12 @@ export default function UserReports() {
 
 
 
+=======
+ 
+>>>>>>> main
   // TODO: sita logika reikia perkelti i atskira komponenta kartu su chart'u
   useEffect(() => {
-    fetchSolarData(50, 70)
+    fetchSolarData(1,10)
       .then((data) => {
         setAc(data.map((obj) => obj.total_AC_Power));
         setTotalGenerated2(data.map((obj) => obj.total_Energy));
@@ -107,7 +111,6 @@ export default function UserReports() {
         setTime(data.map((obj) => obj.time));
         setData(data);
       });
-
     fetchSolarDataByID(1)
       .then((data) => {
         setTotalGenerated(data.total_Energy);
