@@ -11,7 +11,7 @@ import {
 
 // Admin Imports
 import MainDashboard from "views/admin/default";
-import NFTMarketplace from "views/admin/marketplace";
+import WeatherInformation from "views/admin/weather-information";
 import Profile from "views/admin/profile";
 import DataTables from "views/admin/dataTables";
 
@@ -38,7 +38,7 @@ const routes = [
         color='inherit'
       />
     ),
-    component: NFTMarketplace,
+    component: WeatherInformation,
     secondary: true,
   },
   {

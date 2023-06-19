@@ -81,6 +81,7 @@ export function lineChartOptionsTotalSpent(props) {
       },
     },
     color: ["#7551FF", "#39B8FF"],
+
   };
   return json;
 }
@@ -93,4 +94,14 @@ export function weatherLineChartCloudCover(props) {
     }
   ];
   return json;
+}
+
+
+export function LineChartData(name, data) {
+  return [
+    {
+      name: name,
+      data: data,
+    }
+  ];
 }
