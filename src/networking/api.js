@@ -92,9 +92,14 @@ export function getLatestKaunasWeather() {
     return getData(host_server, `/api/weather/observation?station=kauno-ams&date=latest`);
 }
 
+export function getLastNDaysWeatherObservations(days) {
+    return getData(host_server, `/api/weather_observation/GetLastNDaysObservanations/${days}`);
+}
+
 export function loginUser(email, password) {
     return getData(host_server, `/api/auth/login/${email}/${password}`);
 }
+
 export function getLastID() {
     return getData(host_server, `/api/SolarData/GetLastID`);
 }

@@ -33,6 +33,31 @@ import TotalSpent from "views/admin/default/components/TotalSpent";
 import WeeklyRevenue from "views/admin/default/components/WeeklyRevenue";
 
 import {
+  lineChartDataOverallRevenue,
+  lineChartOptionsOverallRevenue,
+  barChartDataDailyTraffic,
+  barChartOptionsDailyTraffic,
+  barChartOptionsCharts2,
+  pieChartOptions,
+  pieChartData,
+  barChartDataCharts2,
+  bubbleChartData,
+  bubbleChartOptions,
+  donutChartDataCharts1,
+  donutChartOptionsCharts1,
+  lineBarChartData,
+  lineBarChartOptions,
+  lineChartDataAreaEventsCalendar,
+  lineChartOptionsAreaEventsCalendar,
+  polarChartDataCharts,
+  polarChartOptionsCharts,
+  radarChartDataCharts,
+  radarChartOptionsCharts
+} from "components/charts/chartData.js";
+
+import LineChart from "components/charts/LineChart";
+
+import {
   columnsDataCheck,
   columnsDataComplex,
   SolarDataHeader
@@ -41,6 +66,9 @@ import tableDataCheck from "views/admin/default/variables/tableDataCheck.json";
 import tableDataComplex from "views/admin/default/variables/tableDataComplex.json";
 import DataTable from "components/dataDispaly/DataTable";
 import TotalACPower from "components/dataDispaly/TotalACPower";
+import { weatherLineChartCloudCover, lineChartOptionsTotalSpent, LineChartData } from "components/dataDispaly/charts.js"
+import WeatherChart from "components/dataDispaly/WeatherChart";
+
 
 import { fetchSolarData, fetchSolarDataByID, getCurrentWeather, getLastID } from "networking/api";
 
@@ -61,28 +89,41 @@ export default function UserReports() {
   const [totalOperationDays, setTotalOperationDays] = useState(null);
   const [cloudCover, setCloudCover] = useState(null);
   const [conditionCode, setConditionCode] = useState(null);
+<<<<<<< HEAD
+
+  const [totalGenerated2, setTotalGenerated2] = useState(null);
+  const [pV1_Voltage, setPV1_Voltage] = useState(null);
+  const [pV2_Voltage, setPV2_Voltage] = useState(null);
+
+
+
+=======
  
+>>>>>>> main
   // TODO: sita logika reikia perkelti i atskira komponenta kartu su chart'u
   useEffect(() => {
     fetchSolarData(1,10)
       .then((data) => {
         setAc(data.map((obj) => obj.total_AC_Power));
+        setTotalGenerated2(data.map((obj) => obj.total_Energy));
+        setPV1_Voltage(data.map((obj) => obj.pV1_Voltage));
+        setPV2_Voltage(data.map((obj) => obj.pV2_Voltage));
         setTime(data.map((obj) => obj.time));
         setData(data);
       });
     fetchSolarDataByID(1)
       .then((data) => {
-          setTotalGenerated(data.total_Energy);
-          setTodayGenerated(data.daily_Energy);
-          const totalOperationDays = data.total_Operation_Hours / 24;
-          setTotalOperationDays(totalOperationDays % 2 === 0 ? totalOperationDays : totalOperationDays.toFixed(2));
+        setTotalGenerated(data.total_Energy);
+        setTodayGenerated(data.daily_Energy);
+        const totalOperationDays = data.total_Operation_Hours / 24;
+        setTotalOperationDays(totalOperationDays % 2 === 0 ? totalOperationDays : totalOperationDays.toFixed(2));
       });
-    
+
     getCurrentWeather()
-          .then((data) => {
-            setCloudCover(data.cloudCover);
-            setConditionCode(data.conditionCode === "null" ? "-" : data.conditionCode.replace(/-/g, " "));
-          });
+      .then((data) => {
+        setCloudCover(data.cloudCover);
+        setConditionCode(data.conditionCode === "null" ? "-" : data.conditionCode.replace(/-/g, " "));
+      });
 
   }, []);
 
@@ -94,6 +135,22 @@ export default function UserReports() {
     <Box pt={{ base: "130px", md: "80px", xl: "80px" }}>
       <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap='20px' mb='20px'>
         {data && <TotalACPower Yaxis={ac} Xaxis={time} />}
+      </SimpleGrid>
+      <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap='20px' mb='20px'>
+        <WeatherChart
+          title="PV1 and PV2 voltage"
+          yAxisData={[
+            {
+              name: "pV2_Voltage",
+              data: pV1_Voltage
+            },
+            {
+              name: "pV2_Voltage",
+              data: pV2_Voltage,
+            }
+          ]}
+          xAxisData={lineChartOptionsTotalSpent(time)}
+        />
       </SimpleGrid>
       {/* TODO: sitas table rodo max tik 5 eilutes, o duomenu yra daug daugiau */}
       <SimpleGrid columns={{ base: 1, md: 1, xl: 1 }} gap='20px' mb='20px'>
@@ -147,32 +204,32 @@ export default function UserReports() {
         />
         <MiniWeather />
         <MiniStatistics
-            startContent={
-                <IconBox
-                    w='56px'
-                    h='56px'
-                    bg={boxBg}
-                    icon={
-                        <i class="fa-solid fa-cloud weather-icon"></i>
-                    }
-                />
-            }
-            name='Cloud Cover'
-            value={cloudCover == null ? "- %" : `${cloudCover} %`}
+          startContent={
+            <IconBox
+              w='56px'
+              h='56px'
+              bg={boxBg}
+              icon={
+                <i class="fa-solid fa-cloud weather-icon"></i>
+              }
+            />
+          }
+          name='Cloud Cover'
+          value={cloudCover == null ? "- %" : `${cloudCover} %`}
         />
         <MiniStatistics
-            startContent={
-                <IconBox
-                    w='56px'
-                    h='56px'
-                    bg={boxBg}
-                    icon={
-                        <i class="fa-solid fa-user-large weather-icon"></i>
-                    }
-                />
-            }
-            name='Condition'
-            value={conditionCode == null ? "-" : `${conditionCode}`}
+          startContent={
+            <IconBox
+              w='56px'
+              h='56px'
+              bg={boxBg}
+              icon={
+                <i class="fa-solid fa-user-large weather-icon"></i>
+              }
+            />
+          }
+          name='Condition'
+          value={conditionCode == null ? "-" : `${conditionCode}`}
         />
       </SimpleGrid>
     </Box>
